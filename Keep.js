@@ -70,6 +70,7 @@ function addNewNote(text="")
      editBtn.addEventListener("click",()=>{
         mainDiv.classList.toggle("hidden");
         textArea.classList.toggle("hidden");
+        
      })
 
      //Change after final , input : on each key pressed
@@ -77,6 +78,8 @@ function addNewNote(text="")
          var value = event.target.value;
          mainDiv.innerHTML = value;
          updateData();
+        mainDiv.classList.toggle("hidden");
+        textArea.classList.toggle("hidden");
      });
     
      notesBox.appendChild(note);
