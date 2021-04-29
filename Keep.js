@@ -32,14 +32,18 @@ const updateData = ()=>{
 
 function addNewNote(text="")
 {
+    var darkMode = document.querySelector(".darkMode").children[0].classList[3];
+    console.log(darkMode);
     var note = document.createElement("div");
     note.classList.add("node");
-     var containerHTML = `
+    if(darkMode=="fa-toggle-off")
+    {
+        var containerHTML = `
         <div class="card m-2" style="width: 18rem;">
             <div class="card-body">
-              <h5 class="card-title d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-light editBtn mr-1"><i class="fa far fa-edit " style="color: rgb(53, 185, 53);"></i></button>
-                <button type="button" class="btn btn-outline-light delBtn ml-1"><i class="fa fas fa-trash " style="color: red;"></i></button>
+              <h5 class="card-title d-flex justify-content-around">
+               <i class="editBtn  fa far fa-edit " style="color: rgb(53, 185, 53); cursor: pointer;"></i>
+               <i class="delBtn fa fas fa-trash " style="color: red; cursor: pointer;"></i>
               </h5>
               <div class="container-fluid p-0 overLappingContainer" style="height: 10rem;"> 
                 <div class="lapingDiv1 ${text ? "":"hidden" }" ></div>
@@ -47,8 +51,24 @@ function addNewNote(text="")
               </div>
             </div>
         </div>`;
+    }
+    else{
+        var containerHTML = `
+        <div class="card m-2" style="width: 18rem;  background-color: rgb(63, 60, 60); color:rgb(255, 255, 255);">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-around">
+               <i class="editBtn  fa far fa-edit " style="color: rgb(53, 185, 53); cursor: pointer;"></i>
+               <i class="delBtn fa fas fa-trash " style="color: red; cursor: pointer;"></i>
+              </h5>
+              <div class="container-fluid p-0 overLappingContainer" style="height: 10rem;"> 
+                <div class="lapingDiv1 ${text ? "":"hidden" }" ></div>
+                <textarea class="${text ? "hidden" : "" }" placeholder="Start From Here" ></textarea>
+              </div>
+            </div>
+        </div>`;
+    }
      note.insertAdjacentHTML("afterbegin",containerHTML);
-     //console.log(note);
+     //console.log(note);    
 
      //Keeping track of Refferences 
      var editBtn = note.querySelector(".editBtn");
@@ -59,6 +79,8 @@ function addNewNote(text="")
      delBtn.addEventListener("click",()=>{
          note.remove();
          updateData();
+         mainDiv.classList.toggle("hidden");
+         textArea.classList.toggle("hidden");
      })
  
      //to Show intial value on both container
@@ -70,7 +92,6 @@ function addNewNote(text="")
      editBtn.addEventListener("click",()=>{
         mainDiv.classList.toggle("hidden");
         textArea.classList.toggle("hidden");
-        
      })
 
      //Change after final , input : on each key pressed
@@ -78,10 +99,37 @@ function addNewNote(text="")
          var value = event.target.value;
          mainDiv.innerHTML = value;
          updateData();
-        mainDiv.classList.toggle("hidden");
-        textArea.classList.toggle("hidden");
+         mainDiv.classList.toggle("hidden");
+         textArea.classList.toggle("hidden");
      });
     
      notesBox.appendChild(note);
 };
+
+var darkMode = document.querySelector(".darkMode");
+darkMode.addEventListener("click",()=>{
+    darkMode.children[0].classList.toggle("fa-toggle-on");
+    darkMode.children[0].classList.toggle("fa-toggle-off");
+    var curMode =   darkMode.children[0].classList[3];
+    if(curMode=="fa-toggle-on")
+    {
+        document.querySelector("body").style.backgroundColor =  "rgb(36, 34, 34)";
+        darkMode.parentNode.style.color="rgb(201, 184, 87)";
+        var textArea = document.querySelectorAll("textarea");
+        textArea.forEach((box)=>{
+            box.parentNode.parentNode.parentNode.style.backgroundColor=" rgb(63, 60, 60)";
+            box.parentNode.parentNode.parentNode.style.color="rgb(255, 255, 255)";
+        })
+    }
+    else{
+        document.querySelector("body").style.backgroundColor = "rgb(255, 255, 255)";
+        darkMode.parentNode.style.color= "rgb(36, 34, 34)";
+        var textArea = document.querySelectorAll("textarea");
+        textArea.forEach((box)=>{
+            box.parentNode.parentNode.parentNode.style.backgroundColor="rgb(255, 255, 255)";
+            box.parentNode.parentNode.parentNode.style.color= "black";
+        })
+       
+    }
+})
 
