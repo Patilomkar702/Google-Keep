@@ -1,0 +1,84 @@
+console.log("JS Loaded For Keep");
+
+const addBtn = document.querySelector(".add");
+const notesBox = document.querySelector(".notesBox");
+addBtn.addEventListener("click",()=>{addNewNote();});
+
+window.onload = ()=>{
+   var storeData = localStorage.getItem("notes");   //Data in String
+    storeData = JSON.parse(storeData);
+    console.log(storeData);
+    if(storeData.length>=0)
+    {
+        storeData.forEach((curData)=>{
+            addNewNote(curData);
+        })
+    }
+  
+}
+
+const updateData = ()=>{
+    var noteBoxes = document.querySelectorAll("textarea");
+    var notesArr = [];
+    //console.log(noteBoxes);
+    noteBoxes.forEach((curBox)=>{
+        notesArr.push(curBox.value);
+    });
+   // console.log(notesArr);
+   //Since Data is store in String Format on Local Strage 
+   localStorage.setItem("notes",JSON.stringify(notesArr));  
+            //with json : ["1","2"]    : without : 1,2,3
+}
+
+function addNewNote(text="")
+{
+    var note = document.createElement("div");
+    note.classList.add("node");
+     var containerHTML = `
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-light editBtn mr-1"><i class="fa far fa-edit " style="color: rgb(53, 185, 53);"></i></button>
+                <button type="button" class="btn btn-outline-light delBtn ml-1"><i class="fa fas fa-trash " style="color: red;"></i></button>
+              </h5>
+              <div class="container-fluid p-0 overLappingContainer" style="height: 10rem;"> 
+                <div class="lapingDiv1 ${text ? "":"hidden" }" ></div>
+                <textarea class="${text ? "hidden" : "" }" placeholder="Start From Here" ></textarea>
+              </div>
+            </div>
+        </div>`;
+     note.insertAdjacentHTML("afterbegin",containerHTML);
+     //console.log(note);
+
+     //Keeping track of Refferences 
+     var editBtn = note.querySelector(".editBtn");
+     var delBtn = note.querySelector(".delBtn");
+     var mainDiv = note.querySelector(".lapingDiv1");
+     var textArea = note.querySelector("textarea");
+
+     delBtn.addEventListener("click",()=>{
+         note.remove();
+         updateData();
+     })
+ 
+     //to Show intial value on both container
+     textArea.value=text;
+     mainDiv.innerHTML=text;
+
+     //create Overlapping div  : see css      : Toggle means ON Off : ifPresent then delete viceVersa
+
+     editBtn.addEventListener("click",()=>{
+        mainDiv.classList.toggle("hidden");
+        textArea.classList.toggle("hidden");
+     })
+
+     //Change after final , input : on each key pressed
+     textArea.addEventListener("change",(event)=>{
+         var value = event.target.value;
+         mainDiv.innerHTML = value;
+         updateData();
+     });
+    
+     notesBox.appendChild(note);
+};
+
