@@ -39,7 +39,7 @@ function addNewNote(text="")
     if(darkMode=="fa-toggle-off")
     {
         var containerHTML = `
-        <div class="card m-2" style="width: 18rem;">
+        <div class="card m-2" style="width: 18rem;  background-color: #ffc107;">
             <div class="card-body">
               <h5 class="card-title d-flex justify-content-around">
                <i class="editBtn  fa far fa-edit " style="color: rgb(53, 185, 53); cursor: pointer;"></i>
@@ -47,7 +47,7 @@ function addNewNote(text="")
               </h5>
               <div class="container-fluid p-0 overLappingContainer" style="height: 10rem;"> 
                 <div class="lapingDiv1 ${text ? "":"hidden" }" ></div>
-                <textarea class="${text ? "hidden" : "" }" placeholder="Start From Here" ></textarea>
+                <textarea class="${text ? "hidden" : "" }" placeholder="Start From Here" style="background-color: #e2ca82; "></textarea>
               </div>
             </div>
         </div>`;
@@ -62,7 +62,7 @@ function addNewNote(text="")
               </h5>
               <div class="container-fluid p-0 overLappingContainer" style="height: 10rem;"> 
                 <div class="lapingDiv1 ${text ? "":"hidden" }" ></div>
-                <textarea class="${text ? "hidden" : "" }" placeholder="Start From Here" ></textarea>
+                <textarea class="${text ? "hidden" : "" }" placeholder="Start From Here" style="background-color: rgb(78, 78, 78); color:white;" ></textarea>
               </div>
             </div>
         </div>`;
@@ -126,7 +126,7 @@ darkMode.addEventListener("click",()=>{
         darkMode.parentNode.style.color= "rgb(36, 34, 34)";
         var textArea = document.querySelectorAll("textarea");
         textArea.forEach((box)=>{
-            box.parentNode.parentNode.parentNode.style.backgroundColor="rgb(255, 255, 255)";
+            box.parentNode.parentNode.parentNode.style.backgroundColor="#ffc107";
             box.parentNode.parentNode.parentNode.style.color= "black";
         })
        
