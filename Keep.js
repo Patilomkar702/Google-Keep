@@ -103,7 +103,7 @@ function addNewNote(text="")
          textArea.classList.toggle("hidden");
      });
     
-     notesBox.appendChild(note);
+     notesBox.insertBefore(note,notesBox.firstChild);
 };
 
 var darkMode = document.querySelector(".darkMode");
